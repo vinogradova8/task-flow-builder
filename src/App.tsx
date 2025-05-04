@@ -9,7 +9,8 @@ import {
   addEdge,
   Node,
   BackgroundVariant,
-	Connection,
+  Connection,
+  MarkerType,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -30,7 +31,19 @@ const initialNodes: Node<TaskData>[] = [
   },
 ];
 
-const initialEdges = [{ id: '1-2', source: '1', target: '2' }];
+const initialEdges = [
+  {
+    id: '1-2',
+    source: '1',
+    target: '2',
+    type: 'default',
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 25,
+      height: 25,
+    },
+  },
+];
 
 export default function App() {
   const [nodes, setNodes, onNodesChange] =
@@ -38,7 +51,21 @@ export default function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            type: 'default',
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 25,
+              height: 25,
+            },
+          },
+          eds
+        )
+      ),
     [setEdges]
   );
 
