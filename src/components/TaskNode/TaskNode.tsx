@@ -1,22 +1,31 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { type NodeProps, type Node, Handle, Position } from '@xyflow/react';
+import { type NodeProps, Handle, Position } from '@xyflow/react';
 import './TaskNode.scss';
-
-export type TaskData = {
-  label: string;
-};
-
-export type TaskNode = Node<TaskData, 'label'>;
+import { type TaskNodeType } from '../../types/TaskNodeType';
+import { useDispatch } from 'react-redux';
+import { editTaskNode, deleteTaskNode } from '../../features/task';
 
 export const TaskNode = memo(function TaskNode({
+  id,
   data,
   selected,
-}: NodeProps<TaskNode>) {
+}: NodeProps<TaskNodeType>) {
   const [label, setLabel] = useState(data.label || '');
   const [edited, setEdited] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const handleDeleteTaskNode = (id: string) => dispatch(deleteTaskNode({ id }));
+
+  const handleEditTaskNodes = (id: string, newLabel: string) => {
+    if (newLabel !== data.label) {
+      dispatch(editTaskNode({ id, label: newLabel }));
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    handleEditTaskNodes(id, label);
     setEdited(false);
   };
 
@@ -36,6 +45,7 @@ export const TaskNode = memo(function TaskNode({
         setEdited(!edited);
       }}
     >
+      <button onClick={() => handleDeleteTaskNode(id)}>х</button>
       {edited && selected ? (
         <form action='' onSubmit={handleSubmit}>
           <input
@@ -44,6 +54,7 @@ export const TaskNode = memo(function TaskNode({
             value={label}
             onChange={(e) => setLabel(e.target.value)}
             className='task-node__input'
+            onBlur={() => handleEditTaskNodes(id, label)}
           />
         </form>
       ) : (
