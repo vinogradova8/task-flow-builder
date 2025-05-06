@@ -20,8 +20,17 @@ const uiSlice = createSlice({
     clearActiveTaskNode(state) {
       state.activeTaskNode = null;
     },
+
+    setActiveTaskNodeLabel(state, action: PayloadAction<string>) {
+      if (state.activeTaskNode)
+        state.activeTaskNode.data.label = action.payload;
+    },
   },
 });
 
-export const { setActiveTaskNode, clearActiveTaskNode } = uiSlice.actions;
+export const {
+  setActiveTaskNode,
+  clearActiveTaskNode,
+  setActiveTaskNodeLabel,
+} = uiSlice.actions;
 export default uiSlice.reducer;

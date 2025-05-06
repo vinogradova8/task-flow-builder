@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './SideBar.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { clearActiveTaskNode } from '../../features/ui';
 
 type Props = {

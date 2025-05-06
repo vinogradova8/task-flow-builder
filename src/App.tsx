@@ -16,7 +16,7 @@ import { TaskNode } from './components/TaskNode/TaskNode';
 import { TaskNodeType } from './types/TaskNodeType';
 import { addTaskNode, editTaskNode, setTaskNodes } from './features/task';
 import { addNewEdge, deleteEdge, setEdges } from './features/edge';
-import { useAppDispatch, useAppSelector } from './hooks';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 import { EdgeType } from './types/EdgeType';
 import './App.scss';
 import { Sidebar } from './components/SideBar/SideBar';
@@ -29,7 +29,7 @@ export default function App() {
 
   const dispatch = useAppDispatch();
 
-  const taskNodesWithActiveProperty = taskNodes.map((node) => ({
+  const taskNodesWithActiveProperty = taskNodes.map((node: TaskNodeType) => ({
     ...node,
     data: {
       ...node.data,
@@ -48,7 +48,7 @@ export default function App() {
   const handleAddTaskNode = () => {
     const newId =
       taskNodes.length > 0
-        ? (Math.max(...taskNodes.map((item) => +item.id)) + 1).toString()
+        ? (Math.max(...taskNodes.map((item: TaskNodeType) => +item.id)) + 1).toString()
         : '1';
 
     const newNode: TaskNodeType = {

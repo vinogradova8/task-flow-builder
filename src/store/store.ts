@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import taskReducer from './features/task';
-import edgeReducer from './features/edge';
-import uiReducer from './features/ui';
+import taskReducer from '../features/task';
+import edgeReducer from '../features/edge';
+import uiReducer from '../features/ui';
 
 const store = configureStore({
   reducer: {

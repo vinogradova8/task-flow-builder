@@ -4,7 +4,8 @@ import './TaskNode.scss';
 import { type TaskNodeType } from '../../types/TaskNodeType';
 import { useDispatch } from 'react-redux';
 import { editTaskNode, deleteTaskNode } from '../../features/task';
-import { clearActiveTaskNode } from '../../features/ui';
+import { clearActiveTaskNode, setActiveTaskNodeLabel } from '../../features/ui';
+import { useAppSelector } from '../../store/hooks';
 
 export const TaskNode = memo(function TaskNode({
   id,
@@ -14,6 +15,7 @@ export const TaskNode = memo(function TaskNode({
   const [label, setLabel] = useState(data.label || '');
   const [edited, setEdited] = useState(false);
 
+  const ui = useAppSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   const handleDeleteTaskNode = (id: string) => {
@@ -30,6 +32,7 @@ export const TaskNode = memo(function TaskNode({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleEditTaskNodes(id, label);
+    dispatch(clearActiveTaskNode());
     setEdited(false);
   };
 
@@ -41,6 +44,12 @@ export const TaskNode = memo(function TaskNode({
       item.current.select();
     }
   }, [edited]);
+
+  useEffect(() => {
+    if (!ui.activeTaskNode) {
+      setEdited(false);
+    }
+  }, [ui.activeTaskNode]);
 
   return (
     <div
@@ -63,8 +72,11 @@ export const TaskNode = memo(function TaskNode({
           <input
             ref={item}
             type='text'
-            value={label}
-            onChange={(e) => setLabel(e.target.value)}
+            value={ui.activeTaskNode?.data.label}
+            onChange={(e) => {
+              setLabel(e.target.value);
+              dispatch(setActiveTaskNodeLabel(e.target.value));
+            }}
             className='task-node__input'
             onBlur={() => handleEditTaskNodes(id, label)}
           />
