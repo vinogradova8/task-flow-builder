@@ -4,6 +4,7 @@ import './TaskNode.scss';
 import { type TaskNodeType } from '../../types/TaskNodeType';
 import { useDispatch } from 'react-redux';
 import { editTaskNode, deleteTaskNode } from '../../features/task';
+import { clearActiveTaskNode } from '../../features/ui';
 
 export const TaskNode = memo(function TaskNode({
   id,
@@ -15,7 +16,10 @@ export const TaskNode = memo(function TaskNode({
 
   const dispatch = useDispatch();
 
-  const handleDeleteTaskNode = (id: string) => dispatch(deleteTaskNode({ id }));
+  const handleDeleteTaskNode = (id: string) => {
+    dispatch(deleteTaskNode(id));
+    dispatch(clearActiveTaskNode());
+  };
 
   const handleEditTaskNodes = (id: string, newLabel: string) => {
     if (newLabel !== data.label) {
@@ -45,7 +49,15 @@ export const TaskNode = memo(function TaskNode({
         setEdited(!edited);
       }}
     >
-      <button onClick={() => handleDeleteTaskNode(id)}>х</button>
+      {data.isActive && (
+        <button
+          className='task-node__delete'
+          onClick={() => handleDeleteTaskNode(id)}
+        >
+          х
+        </button>
+      )}
+
       {edited && selected ? (
         <form action='' onSubmit={handleSubmit}>
           <input
@@ -58,7 +70,7 @@ export const TaskNode = memo(function TaskNode({
           />
         </form>
       ) : (
-        <p>{label}</p>
+        <p className='task-node__title'>{data.label}</p>
       )}
       <>
         <Handle type='target' position={Position.Top} />

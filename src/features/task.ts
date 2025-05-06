@@ -6,13 +6,13 @@ const defaultTasks: TaskNodeType[] = [
     id: '1',
     type: 'task',
     position: { x: 0, y: 0 },
-    data: { label: 'Task 1' },
+    data: { label: 'Task 1', isActive: false },
   },
   {
     id: '2',
     type: 'task',
     position: { x: 0, y: 100 },
-    data: { label: 'Task 2' },
+    data: { label: 'Task 2', isActive: false },
   },
 ];
 
@@ -44,9 +44,9 @@ const taskSlice = createSlice({
 
     deleteTaskNode(
       state: TaskNodeType[],
-      action: PayloadAction<{id: string}>
+      action: PayloadAction<string>
     ) {
-      return state.filter((item) => item.id !== action.payload.id);
+      return state.filter((item) => item.id !== action.payload);
     },
 
     setTaskNodes(

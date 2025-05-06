@@ -33,7 +33,11 @@ const edgeSlice = createSlice({
   reducers: {
     addNewEdge(state: EdgeType[], action: PayloadAction<EdgeType>) {
       state.push(action.payload);
-    },
+		},
+		
+		deleteEdge(state: EdgeType[], action: PayloadAction<string>) {
+			return state.filter((edge) => edge.id !== action.payload);
+		},
 
     setEdges(_state, action: PayloadAction<EdgeType[]>) {
       return action.payload;
@@ -41,5 +45,5 @@ const edgeSlice = createSlice({
   },
 });
 
-export const { addNewEdge, setEdges } = edgeSlice.actions;
+export const { addNewEdge, deleteEdge, setEdges } = edgeSlice.actions;
 export default edgeSlice.reducer;

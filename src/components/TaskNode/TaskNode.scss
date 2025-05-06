@@ -1,4 +1,5 @@
 .task-node {
+	position: relative;
 	border: 3px solid #000;
 	border-radius: 4px;
 	padding: 5px;
@@ -8,5 +9,38 @@
 	&--selected {
 		border: 3px solid green;
 		transition: all 0.3s ease;
+	}
+
+	&__input {
+		padding: 5px;
+		border: 1px solid #000;
+		font-size: 20px;
+
+	}
+
+	&__title {
+		margin-left: 5px;
+		font-size: 20px;
+	}
+
+	&__delete {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		z-index: 10px;
+		border: 1px solid #626161;
+		border-radius: 3px;
+		padding-inline: 3px;
+		padding-block: 0px;
+		line-height: 1;
+		color: red;
+		background-color: #fff;
+
+		transition: all 0.3s ease 0s;
+
+		&:hover {
+			border: 1px solid #000;
+			background-color: #dcdada;
+		}
 	}
 }
