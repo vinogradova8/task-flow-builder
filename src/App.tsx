@@ -54,7 +54,7 @@ export default function App() {
     const newNode: TaskNodeType = {
       id: newId,
       type: 'task',
-      position: { x: 0, y: 400 },
+      position: { x: 0, y: 0 },
       data: { label: 'New Task', isActive: false },
     };
 

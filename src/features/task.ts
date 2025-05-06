@@ -5,13 +5,13 @@ const defaultTasks: TaskNodeType[] = [
   {
     id: '1',
     type: 'task',
-    position: { x: 0, y: 0 },
+    position: { x: 500, y: 100 },
     data: { label: 'Task 1', isActive: false },
   },
   {
     id: '2',
     type: 'task',
-    position: { x: 0, y: 100 },
+    position: { x: 500, y: 300 },
     data: { label: 'Task 2', isActive: false },
   },
 ];

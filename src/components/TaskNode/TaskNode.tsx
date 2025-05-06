@@ -68,7 +68,7 @@ export const TaskNode = memo(function TaskNode({
       )}
 
       {edited && selected ? (
-        <form action='' onSubmit={handleSubmit}>
+        <form action='#' onSubmit={handleSubmit}>
           <input
             ref={item}
             type='text'
@@ -79,6 +79,7 @@ export const TaskNode = memo(function TaskNode({
             }}
             className='task-node__input'
             onBlur={() => handleEditTaskNodes(id, label)}
+            placeholder='enter your task'
           />
         </form>
       ) : (

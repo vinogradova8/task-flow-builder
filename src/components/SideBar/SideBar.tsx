@@ -15,6 +15,12 @@ export const Sidebar = ({ onSave }: Props) => {
 
   const item = useRef<HTMLInputElement>(null);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSave(label);
+    dispatch(clearActiveTaskNode());
+  };
+
   useEffect(() => {
     if (item.current) {
       item.current.focus();
@@ -29,12 +35,16 @@ export const Sidebar = ({ onSave }: Props) => {
   return (
     <div className='sidebar'>
       <h3>Editing</h3>
-      <input
-        ref={item}
-        value={label}
-        onChange={(e) => setLabel(e.target.value)}
-        className='sidebar__input'
-      />
+      <form action='#' onSubmit={handleSubmit}>
+        <input
+          ref={item}
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          className='sidebar__input'
+          placeholder='enter your task'
+        />
+      </form>
+
       <div className='sidebar__actions'>
         <button onClick={() => onSave(label)} className='sidebar__button'>
           Save
