@@ -4,7 +4,11 @@ import './TaskNode.scss';
 import { type TaskNodeType } from '../../types/TaskNodeType';
 import { useDispatch } from 'react-redux';
 import { editTaskNode, deleteTaskNode } from '../../features/task';
-import { clearActiveTaskNode, setActiveTaskNodeLabel, setIsEditingTaskNode } from '../../features/ui';
+import {
+  clearActiveTaskNode,
+  setActiveTaskNodeLabel,
+  setIsEditingTaskNode,
+} from '../../features/ui';
 import { useAppSelector } from '../../store/hooks';
 
 export const TaskNode = memo(function TaskNode({
@@ -18,7 +22,7 @@ export const TaskNode = memo(function TaskNode({
   const ui = useAppSelector((state) => state.ui);
   const dispatch = useDispatch();
 
-	const handleDeleteTaskNode = (id: string) => {
+  const handleDeleteTaskNode = (id: string) => {
     dispatch(deleteTaskNode(id));
   };
 
@@ -32,8 +36,8 @@ export const TaskNode = memo(function TaskNode({
     e.preventDefault();
     handleEditTaskNodes(id, label);
     dispatch(clearActiveTaskNode());
-		setEdited(false);
-		dispatch(setIsEditingTaskNode(false))
+    setEdited(false);
+    dispatch(setIsEditingTaskNode(false));
   };
 
   const item = useRef<HTMLInputElement>(null);
@@ -47,10 +51,32 @@ export const TaskNode = memo(function TaskNode({
 
   useEffect(() => {
     if (!ui.activeTaskNode) {
-			setEdited(false);
-			dispatch(setIsEditingTaskNode(false));
+      setEdited(false);
+      dispatch(setIsEditingTaskNode(false));
     }
-  }, [dispatch, ui.activeTaskNode]);
+	}, [dispatch, ui.activeTaskNode]);
+
+	useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+				setEdited(false);
+				dispatch(setIsEditingTaskNode(false));
+				dispatch(clearActiveTaskNode());
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [dispatch]);
+	
+	const styleHandle = {
+    width: 10,
+    height: 10,
+	};
+	const styleInlineHandleOut = {
+    ...styleHandle,
+		top: 30,
+  };
 
   return (
     <div
@@ -92,8 +118,34 @@ export const TaskNode = memo(function TaskNode({
         <p className='task-node__title'>{data.label}</p>
       )}
       <>
-        <Handle type='target' position={Position.Top} />
-        <Handle type='source' position={Position.Bottom} />
+        <Handle style={styleHandle} type='target' position={Position.Top} />
+        <Handle style={styleHandle} type='source' position={Position.Bottom} />
+
+        <Handle
+          style={styleHandle}
+          type='target'
+          position={Position.Left}
+          id='left-in'
+        />
+        <Handle
+          style={styleInlineHandleOut}
+          type='source'
+          position={Position.Left}
+          id='left-out'
+        />
+
+        <Handle
+          style={styleHandle}
+          type='target'
+          position={Position.Right}
+          id='right-in'
+        />
+        <Handle
+          style={styleInlineHandleOut}
+          type='source'
+          position={Position.Right}
+          id='right-out'
+        />
       </>
     </div>
   );

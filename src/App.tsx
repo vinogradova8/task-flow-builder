@@ -98,7 +98,11 @@ export default function App() {
     const storedEdges = localStorage.getItem('edge');
     const storedTasks = localStorage.getItem('task');
 
-    if ((storedEdges && !JSON.parse(storedEdges).length)) {
+    if (storedEdges && !JSON.parse(storedEdges).length) {
+      localStorage.removeItem('edge');
+    }
+
+    if (!storedTasks || JSON.parse(storedTasks).length === 0) {
       localStorage.removeItem('edge');
     }
 
@@ -117,11 +121,27 @@ export default function App() {
     }
   }, [dispatch, taskNodesWithActiveProperty, ui.activeTaskNode]);
 
+  useEffect(() => {
+    const nodeIds = taskNodes.map((node) => node.id);
+
+    const filteredEdges = edges.filter(
+      (edge) => nodeIds.includes(edge.source) && nodeIds.includes(edge.target)
+    );
+
+    if (filteredEdges.length !== edges.length) {
+      dispatch(setEdges(filteredEdges));
+      localStorage.setItem('edge', JSON.stringify(filteredEdges));
+    }
+  }, [taskNodes, edges, dispatch]);
+
   const onConnect = useCallback(
     (params: Connection) => {
       const newEdge: EdgeType = {
-        ...params,
-        id: `${params.source}-${params.target}`,
+        id: `${params.source}-${params.sourceHandle}-${params.target}-${params.targetHandle}`,
+        source: params.source,
+        target: params.target,
+        sourceHandle: params.sourceHandle || undefined,
+        targetHandle: params.targetHandle || undefined,
         type: 'default',
         markerEnd: {
           type: MarkerType.ArrowClosed,
