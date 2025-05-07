@@ -7,7 +7,7 @@ type Props = {
   onSave: (label: string) => void;
 };
 
-export const Sidebar = ({ onSave }: Props) => {
+export const SideBar = ({ onSave }: Props) => {
   const ui = useAppSelector((state) => state.ui);
   const dispatch = useAppDispatch();
 

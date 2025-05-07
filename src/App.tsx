@@ -19,7 +19,7 @@ import { addNewEdge, deleteEdge, setEdges } from './features/edge';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { EdgeType } from './types/EdgeType';
 import './App.scss';
-import { Sidebar } from './components/SideBar/SideBar';
+import { SideBar } from './components/SideBar/SideBar';
 import { clearActiveTaskNode, setActiveTaskNode } from './features/ui';
 
 export default function App() {
@@ -48,7 +48,9 @@ export default function App() {
   const handleAddTaskNode = () => {
     const newId =
       taskNodes.length > 0
-        ? (Math.max(...taskNodes.map((item: TaskNodeType) => +item.id)) + 1).toString()
+        ? (
+            Math.max(...taskNodes.map((item: TaskNodeType) => +item.id)) + 1
+          ).toString()
         : '1';
 
     const newNode: TaskNodeType = {
@@ -94,6 +96,16 @@ export default function App() {
     localStorage.setItem('edge', JSON.stringify(edges));
   }, [edges, taskNodes]);
 
+  useEffect(() => {
+    const currentActiveTask = taskNodesWithActiveProperty.find(
+      (node) => node.id === ui.activeTaskNode?.id
+		);
+		
+    if (!currentActiveTask && ui.activeTaskNode) {
+      dispatch(clearActiveTaskNode());
+    }
+  }, [dispatch, taskNodesWithActiveProperty, ui.activeTaskNode]);
+
   const onConnect = useCallback(
     (params: Connection) => {
       const newEdge: EdgeType = {
@@ -133,7 +145,7 @@ export default function App() {
         onEdgeDoubleClick={(_event, edge) => dispatch(deleteEdge(edge.id))}
         onPaneClick={() => handleCloseSideBar()}
       >
-        {ui.activeTaskNode && <Sidebar onSave={handleSaveTaskNode}></Sidebar>}
+        {ui.activeTaskNode && <SideBar onSave={handleSaveTaskNode}></SideBar>}
 
         <Controls />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

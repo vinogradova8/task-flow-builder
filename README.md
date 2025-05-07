@@ -16,5 +16,5 @@
 4. Run 'npm run dev'.
 5. click "http://localhost:5173" in terminal to open in browser.
 
-Link to the preview - [DEMO LINK]()
+Link to the preview - [DEMO LINK](https://vinogradova8.github.io/task-flow-builder/)
 

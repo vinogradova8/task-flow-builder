@@ -1,4 +1,21 @@
-@import './styles/reset';
+@use './styles/reset';
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.react-flow__viewport, .react-flow {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
 .page {
 	padding-top: 15px;

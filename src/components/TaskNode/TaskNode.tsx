@@ -18,9 +18,9 @@ export const TaskNode = memo(function TaskNode({
   const ui = useAppSelector((state) => state.ui);
   const dispatch = useDispatch();
 
-  const handleDeleteTaskNode = (id: string) => {
+	const handleDeleteTaskNode = (id: string) => {
+		dispatch(clearActiveTaskNode());
     dispatch(deleteTaskNode(id));
-    dispatch(clearActiveTaskNode());
   };
 
   const handleEditTaskNodes = (id: string, newLabel: string) => {

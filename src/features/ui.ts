@@ -18,6 +18,7 @@ const uiSlice = createSlice({
     },
 
     clearActiveTaskNode(state) {
+      console.log('Reducer clearing');
       state.activeTaskNode = null;
     },
 
