@@ -94,13 +94,24 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('task', JSON.stringify(taskNodes));
     localStorage.setItem('edge', JSON.stringify(edges));
+
+		const storedEdges = localStorage.getItem('edge');
+		const storedTasks = localStorage.getItem('task');
+		
+    if (storedEdges && !JSON.parse(storedEdges).length) {
+      localStorage.removeItem('edge');
+		}
+		
+    if (storedTasks && !JSON.parse(storedTasks).length) {
+      localStorage.removeItem('task');
+    }
   }, [edges, taskNodes]);
 
   useEffect(() => {
     const currentActiveTask = taskNodesWithActiveProperty.find(
       (node) => node.id === ui.activeTaskNode?.id
-		);
-		
+    );
+
     if (!currentActiveTask && ui.activeTaskNode) {
       dispatch(clearActiveTaskNode());
     }

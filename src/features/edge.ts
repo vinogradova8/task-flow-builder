@@ -1,20 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MarkerType } from '@xyflow/react';
 import { EdgeType } from '../types/EdgeType';
 
-const defaultEdges: EdgeType[] = [
-  {
-    id: '1-2',
-    source: '1',
-    target: '2',
-    type: 'default',
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-      width: 25,
-      height: 25,
-    },
-  },
-];
+const defaultEdges: EdgeType[] = [];
 
 const loadEdgesFromStorage = (): EdgeType[] => {
   try {
@@ -33,11 +20,11 @@ const edgeSlice = createSlice({
   reducers: {
     addNewEdge(state: EdgeType[], action: PayloadAction<EdgeType>) {
       state.push(action.payload);
-		},
-		
-		deleteEdge(state: EdgeType[], action: PayloadAction<string>) {
-			return state.filter((edge) => edge.id !== action.payload);
-		},
+    },
+
+    deleteEdge(state: EdgeType[], action: PayloadAction<string>) {
+      return state.filter((edge) => edge.id !== action.payload);
+    },
 
     setEdges(_state, action: PayloadAction<EdgeType[]>) {
       return action.payload;
