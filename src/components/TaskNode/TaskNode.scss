@@ -1,48 +1,49 @@
 .task-node {
-	position: relative;
-	border: 3px solid #000;
-	border-radius: 4px;
-	padding: 5px;
-	width: 300px;
-	height: 100px;
-	background-color: #f6f3f3;
+  position: relative;
+  border: 3px solid #000;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+  height: 100px;
+  background-color: #f6f3f3;
 
-	&--selected {
-		border: 3px solid green;
-		transition: all 0.3s ease;
-	}
+  &--selected {
+    border: 3px solid green;
+    transition: all 0.3s ease;
+  }
 
-	&__input {
-		padding: 5px;
-		border: 1px solid #000;
-		font-size: 20px;
-		border-radius: 4px;
-	}
+  &__input {
+    padding: 5px;
+    border: 1px solid #000;
+    font-size: 20px;
+    border-radius: 4px;
+  }
 
-	&__title {
-		margin-left: 5px;
-		font-size: 20px;
-	}
+  &__title {
+    margin-left: 5px;
+    font-size: 20px;
+    word-wrap: break-word; 
+  }
 
-	&__delete {
-		position: absolute;
-		top: 5px;
-		right: 5px;
-		z-index: 10px;
-		border: 1px solid #626161;
-		border-radius: 3px;
-		padding-inline: 3px;
-		padding-bottom: 2px;
-		padding-top: 0;
-		line-height: 0.8;
-		color: red;
-		background-color: #fff;
+  &__delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10px;
+    border: 1px solid #626161;
+    border-radius: 3px;
+    padding-inline: 3px;
+    padding-bottom: 2px;
+    padding-top: 0;
+    line-height: 0.8;
+    color: red;
+    background-color: #fff;
 
-		transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 
-		&:hover {
-			border: 1px solid #000;
-			background-color: #dcdada;
-		}
-	}
+    &:hover {
+      border: 1px solid #000;
+      background-color: #dcdada;
+    }
+  }
 }
