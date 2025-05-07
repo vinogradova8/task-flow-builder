@@ -145,7 +145,9 @@ export default function App() {
         onEdgeDoubleClick={(_event, edge) => dispatch(deleteEdge(edge.id))}
         onPaneClick={() => handleCloseSideBar()}
       >
-        {ui.activeTaskNode && <SideBar onSave={handleSaveTaskNode}></SideBar>}
+        {ui.activeTaskNode && !ui.isEditingTaskNode && (
+          <SideBar onSave={handleSaveTaskNode}></SideBar>
+        )}
 
         <Controls />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

@@ -26,7 +26,7 @@ export const SideBar = ({ onSave }: Props) => {
       item.current.focus();
       item.current.select();
     }
-  }, []);
+  }, [ui.activeTaskNode]);
 
   useEffect(() => {
     if (ui.activeTaskNode) setLabel(ui.activeTaskNode.data.label);

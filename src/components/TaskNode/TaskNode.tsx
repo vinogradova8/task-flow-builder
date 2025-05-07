@@ -4,7 +4,7 @@ import './TaskNode.scss';
 import { type TaskNodeType } from '../../types/TaskNodeType';
 import { useDispatch } from 'react-redux';
 import { editTaskNode, deleteTaskNode } from '../../features/task';
-import { clearActiveTaskNode, setActiveTaskNodeLabel } from '../../features/ui';
+import { clearActiveTaskNode, setActiveTaskNodeLabel, setIsEditingTaskNode } from '../../features/ui';
 import { useAppSelector } from '../../store/hooks';
 
 export const TaskNode = memo(function TaskNode({
@@ -19,7 +19,6 @@ export const TaskNode = memo(function TaskNode({
   const dispatch = useDispatch();
 
 	const handleDeleteTaskNode = (id: string) => {
-		dispatch(clearActiveTaskNode());
     dispatch(deleteTaskNode(id));
   };
 
@@ -33,7 +32,8 @@ export const TaskNode = memo(function TaskNode({
     e.preventDefault();
     handleEditTaskNodes(id, label);
     dispatch(clearActiveTaskNode());
-    setEdited(false);
+		setEdited(false);
+		dispatch(setIsEditingTaskNode(false))
   };
 
   const item = useRef<HTMLInputElement>(null);
@@ -47,15 +47,21 @@ export const TaskNode = memo(function TaskNode({
 
   useEffect(() => {
     if (!ui.activeTaskNode) {
-      setEdited(false);
+			setEdited(false);
+			dispatch(setIsEditingTaskNode(false));
     }
-  }, [ui.activeTaskNode]);
+  }, [dispatch, ui.activeTaskNode]);
 
   return (
     <div
       className={`task-node ${selected ? 'task-node--selected' : ''}`}
       onDoubleClick={() => {
-        setEdited(!edited);
+        setEdited(true);
+        dispatch(setIsEditingTaskNode(true));
+      }}
+      onClick={() => {
+        setEdited(false);
+        dispatch(setIsEditingTaskNode(false));
       }}
     >
       {data.isActive && (
